@@ -4,9 +4,17 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\User;
 
 class UserController extends Controller
 {
+    private $repository;
+
+    public function __construct(User $user)
+    {
+        $this->repository = $user;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,18 +22,11 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $users = $this->repository->all();
+
+        return response()->json($users);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -35,7 +36,12 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        $data['password'] = bcrypt($data['password']);
+        
+        $user = $this->repository->create($data);
+
+        return response()->json($user, 201);
     }
 
     /**
@@ -46,18 +52,9 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
-    }
+        $user = $this->repository->findOrFail($id);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return response()->json($user);
     }
 
     /**
@@ -69,7 +66,16 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = $this->repository->findOrFail($id);
+
+        $data = $request->all();
+
+        if ($request->password)
+            $data['password'] = bcrypt($data['password']);
+
+        $user->update($data);
+
+        return response()->json($user);
     }
 
     /**
@@ -80,6 +86,8 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->repository->findOrFail($id)->delete();
+
+        return response()->json([], 204);
     }
 }
