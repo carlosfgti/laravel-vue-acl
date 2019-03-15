@@ -2,11 +2,20 @@
 
 namespace App\Http\Controllers\Api;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreUpdatePermissionRequest;
 use App\Http\Controllers\Controller;
+use App\Models\Permission;
+use App\Http\Resources\PermissionResource;
 
 class PermissionController extends Controller
 {
+    private $repository;
+
+    public function __construct(Permission $permission)
+    {
+        $this->repository = $permission;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,28 +23,24 @@ class PermissionController extends Controller
      */
     public function index()
     {
-        //
-    }
+        $permissions = $this->repository->paginate();
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return PermissionResource::collection($permissions);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\StoreUpdatePermissionRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreUpdatePermissionRequest $request)
     {
-        //
+        $permission = $this->repository->create($request->all());
+
+        return (new PermissionResource($permission))
+                ->response()
+                ->setStatusCode(201);
     }
 
     /**
@@ -46,30 +51,25 @@ class PermissionController extends Controller
      */
     public function show($id)
     {
-        //
-    }
+        $permission = $this->repository->findOrFail($id);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return new PermissionResource($permission);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\StoreUpdatePermissionRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreUpdatePermissionRequest $request, $id)
     {
-        //
+        $permission = $this->repository->findOrFail($id);
+
+        $permission->update($request->all());
+
+        return new PermissionResource($permission);
     }
 
     /**
@@ -80,6 +80,8 @@ class PermissionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->repository->findOrFail($id)->delete();
+
+        return response()->json(null, 204);
     }
 }
