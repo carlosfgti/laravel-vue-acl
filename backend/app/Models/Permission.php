@@ -12,9 +12,4 @@ class Permission extends Model
     {
         return $this->belongsToMany(Profile::class);
     }
-
-    public function users()
-    {
-        return $this->hasManyThrough(User::class, Profile::class);
-    }
 }
