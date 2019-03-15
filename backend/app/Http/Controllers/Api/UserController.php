@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Http\Requests\StoreUpdateUserRequest;
@@ -24,7 +23,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = $this->repository->all();
+        $users = $this->repository->paginate();
 
         return UserResource::collection($users);
     }
@@ -43,7 +42,9 @@ class UserController extends Controller
         
         $user = $this->repository->create($data);
 
-        return response()->json($user, 201);
+        return (new UserResource($user))
+                ->response()
+                ->setStatusCode(201);
     }
 
     /**
@@ -56,7 +57,7 @@ class UserController extends Controller
     {
         $user = $this->repository->findOrFail($id);
 
-        return response()->json($user);
+        return new UserResource($user);
     }
 
     /**
@@ -77,7 +78,7 @@ class UserController extends Controller
 
         $user->update($data);
 
-        return response()->json($user);
+        return new UserResource($user);
     }
 
     /**
@@ -90,6 +91,6 @@ class UserController extends Controller
     {
         $this->repository->findOrFail($id)->delete();
 
-        return response()->json([], 204);
+        return response()->json(null, 204);
     }
 }
