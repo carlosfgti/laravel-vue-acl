@@ -16,8 +16,8 @@ class ProfileResource extends JsonResource
     {
         return [
             'name' => $this->name,
-            'permissions' => $this->permissions,
-            'users' => $this->users,
+            'permissions' => PermissionResource::collection($this->whenLoaded('permissions')),
+            'users' => UserResource::collection($this->whenLoaded('users')),
         ];
     }
 }

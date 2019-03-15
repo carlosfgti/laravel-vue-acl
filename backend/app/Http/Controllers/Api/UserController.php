@@ -23,7 +23,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = $this->repository->paginate();
+        $users = $this->repository
+                        ->with(['profiles', 'profiles.permissions'])
+                        ->paginate();
 
         return UserResource::collection($users);
     }

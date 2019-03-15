@@ -16,7 +16,7 @@ class PermissionResource extends JsonResource
     {
         return [
             'name' => $this->name,
-            'profiles' => $this->profiles,
+            'profiles' => ProfileResource::collection($this->whenLoaded('profiles')),
         ];
     }
 }
