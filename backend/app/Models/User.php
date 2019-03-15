@@ -44,11 +44,6 @@ class User extends Authenticatable
 
     public function profiles()
     {
-        return $this->belongsToMany(Profile::class);
-    }
-
-    public function permissions()
-    {
-        return $this->hasManyThrough(Permission::class, Profile::class);
+        return $this->belongsToMany(Profile::class, 'user_profile');
     }
 }
