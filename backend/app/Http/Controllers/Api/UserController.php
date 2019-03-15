@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Http\Requests\StoreUpdateUserRequest;
+use App\Http\Resources\UserResource;
 
 class UserController extends Controller
 {
@@ -25,7 +26,7 @@ class UserController extends Controller
     {
         $users = $this->repository->all();
 
-        return response()->json($users);
+        return UserResource::collection($users);
     }
 
 
