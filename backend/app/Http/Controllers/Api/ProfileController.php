@@ -4,9 +4,18 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Profile;
+use App\Http\Resources\ProfileResource;
 
 class ProfileController extends Controller
 {
+    private $repository;
+
+    public function __construct(Profile $profile)
+    {
+        $this->repository = $profile;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +23,9 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        //
+        $profiles = $this->repository->paginate();
+
+        return ProfileResource::collection($profiles);
     }
 
     /**
@@ -25,7 +36,11 @@ class ProfileController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $profile = $this->repository->create($request->all());
+
+        return (new ProfileResource($profile))
+                ->response()
+                ->setStatusCode(201);
     }
 
     /**
@@ -36,7 +51,9 @@ class ProfileController extends Controller
      */
     public function show($id)
     {
-        //
+        $profile = $this->repository->findOrFail($id);
+
+        return new ProfileResource($profile);
     }
 
     /**
@@ -48,7 +65,11 @@ class ProfileController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $profile = $this->repository->findOrFail($id);
+
+        $profile->update($request->all());
+
+        return new ProfileResource($profile);
     }
 
     /**
@@ -59,6 +80,8 @@ class ProfileController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->repository->findOrFail($id)->delete();
+
+        return response()->json(null, 204);
     }
 }
