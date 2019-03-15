@@ -37,10 +37,7 @@ class UserController extends Controller
      */
     public function store(StoreUpdateUserRequest $request)
     {
-        $data = $request->all();
-        $data['password'] = bcrypt($data['password']);
-        
-        $user = $this->repository->create($data);
+        $user = $this->repository->create($request->all());
 
         return (new UserResource($user))
                 ->response()
@@ -71,12 +68,7 @@ class UserController extends Controller
     {
         $user = $this->repository->findOrFail($id);
 
-        $data = $request->all();
-
-        if ($request->password)
-            $data['password'] = bcrypt($data['password']);
-
-        $user->update($data);
+        $user->update($request->all());
 
         return new UserResource($user);
     }
