@@ -12,4 +12,6 @@ return [
     */
 
     'segment' => 3,
+
+    'token_name' => 'MyApp',
 ];

@@ -23,7 +23,7 @@ class LoginController extends Controller
         if (Auth::attempt($request->only(['email', 'password']))) {
             $user = Auth::user();
 
-            $token = $user->createToken('MyApp')->accessToken;
+            $token = $user->createToken(config('api.token_name'))->accessToken;
 
             return response()->json([
                 'token' => $token,
@@ -33,5 +33,18 @@ class LoginController extends Controller
         return response()->json([
             'error' => 'Unauthorised',
         ], 401);
+    }
+
+
+    public function register(StoreUpdateUserRequest $request)
+    {
+        $user = $this->repository->create($request->all());
+
+        $token = $user->createToken(config('api.token_name'))->accessToken;
+
+        return (new UserResource($user))
+                        ->additional([
+                            'token' => $token,
+                        ]);
     }
 }
