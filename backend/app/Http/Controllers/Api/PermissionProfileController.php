@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Profile;
 use App\Http\Resources\ProfileResource;
+use App\Http\Resources\PermissionResource;
+use App\Models\Permission;
 
 class PermissionProfileController extends Controller
 {
@@ -14,5 +16,14 @@ class PermissionProfileController extends Controller
         $profile = Profile::with('permissions')->findOrFail($idProfile);
 
         return new ProfileResource($profile);
+    }
+
+    public function permissionsNotLinkedProfile($idProfile)
+    {
+        $permissions = Permission::whereDoesntHave('profiles', function($query) use ($idProfile) {
+            $query->where('profile_id', $idProfile);
+        })->get();
+
+        return PermissionResource::collection($permissions);
     }
 }
