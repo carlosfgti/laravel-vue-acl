@@ -47,4 +47,18 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Profile::class, 'user_profile');
     }
+
+    public function hasPermission(Permission $permission)
+    {
+        return $this->hasProfile($permission->profiles);
+    }
+    
+    public function hasProfile($profile)
+    {
+        if(is_string($profile) ) {
+            return $this->profiles->contains('name', $profile);
+        }
+
+        return !! $profile->intersect($this->profiles)->count(); 
+    }
 }
