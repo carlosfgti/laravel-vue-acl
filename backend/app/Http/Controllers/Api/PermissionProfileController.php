@@ -26,4 +26,13 @@ class PermissionProfileController extends Controller
 
         return PermissionResource::collection($permissions);
     }
+
+    public function profileAddPermissions(Request $request, $idProfile)
+    {
+        $profile = Profile::findOrFail($idProfile);
+
+        $profile->permissions()->attach($request->permissions);
+
+        return response()->json(null, 201);
+    }
 }

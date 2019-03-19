@@ -10,3 +10,4 @@ Route::post('/user/{id}/profiles', 'Api\ProfileUserController@userAddProfiles')-
 
 Route::get('/profile/{id}/permissions', 'Api\PermissionProfileController@profilePermissions')->name('profile.permissions');
 Route::get('/profile/{id}/permissions-not-linked', 'Api\PermissionProfileController@permissionsNotLinkedProfile')->name('profile.permissions.not.linked');
+Route::post('/profile/{id}/permissions', 'Api\PermissionProfileController@profileAddPermissions')->name('profile.add.permissions');
