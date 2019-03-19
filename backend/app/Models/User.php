@@ -61,4 +61,9 @@ class User extends Authenticatable
 
         return !! $profile->intersect($this->profiles)->count(); 
     }
+
+    public function isSuperAdmin()
+    {
+        return $this->hasProfile('Admin');
+    }
 }
