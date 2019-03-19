@@ -23,7 +23,7 @@ class StoreUpdateUserRequest extends FormRequest
      */
     public function rules()
     {
-        $id = $this->segment(3);
+        $id = $this->segment(config('api.segment'));
 
         $rules = [
             'name'      => "required|min:3|max:60|unique:users,name,{$id},id",
