@@ -26,4 +26,13 @@ class ProfileUserController extends Controller
 
         return ProfileResource::collection($profiles);
     }
+
+    public function userAddProfiles(Request $request, $idUser)
+    {
+        $user = User::findOrFail($idUser);
+
+        $user->profiles()->attach($request->profiles);
+
+        return response()->json(null, 201);
+    }
 }

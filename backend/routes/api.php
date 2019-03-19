@@ -6,3 +6,4 @@ Route::apiResource('/permissions', 'Api\PermissionController');
 
 Route::get('/user/{id}/profiles', 'Api\ProfileUserController@userProfiles')->name('user.profiles');
 Route::get('/user/{id}/profiles-not-linked', 'Api\ProfileUserController@profilesNotLinkedUser')->name('user.profiles.not.linked');
+Route::post('/user/{id}/profiles', 'Api\ProfileUserController@userAddProfiles')->name('user.add.profiles');
