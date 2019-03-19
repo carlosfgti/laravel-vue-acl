@@ -1,5 +1,7 @@
 <?php
 
+Route::post('login', 'Api\Auth\LoginController@login');
+
 Route::apiResource('/users', 'Api\UserController');
 Route::apiResource('/profiles', 'Api\ProfileController');
 Route::apiResource('/permissions', 'Api\PermissionController');
