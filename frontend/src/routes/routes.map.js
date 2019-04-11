@@ -10,23 +10,24 @@ const routes = [
         component: AdminTemplate,
         children: [
             {
-                path: '/users',
+                path: 'users',
                 component: Users,
                 name: 'admin.users'
             },
             {
-                path: '/profiles',
+                path: 'profiles',
                 component: Profiles,
                 name: 'admin.profiles'
             },
             {
-                path: '/permissions',
+                path: 'permissions',
                 component: Permissions,
                 name: 'admin.permissions'
             },
             {
-                path: '/',
-                component: Home
+                path: '',
+                component: Home,
+                name: 'admin',
             }
         ],
     }
