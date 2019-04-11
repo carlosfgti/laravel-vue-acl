@@ -42,7 +42,9 @@
             <v-icon>person_add_disabled</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
-            <v-list-tile-title>Permissões</v-list-tile-title>
+            <router-link :to="{name: 'admin.permissions'}" tag="v-list-tile-title">
+              Permissões
+            </router-link>
           </v-list-tile-content>
         </v-list-tile>
 
