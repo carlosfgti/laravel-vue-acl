@@ -1,9 +1,12 @@
 import Vue from 'vue'
-import './plugins/vuetify'
-import App from './layouts/App'
+
+import '@/plugins/vuetify'
+import Admin from '@/layouts/Admin'
+import router from '@/routes/routes'
 
 Vue.config.productionTip = false
 
 new Vue({
-  render: h => h(App),
+  router,
+  render: h => h(Admin),
 }).$mount('#app')
