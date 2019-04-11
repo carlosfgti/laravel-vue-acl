@@ -1,6 +1,7 @@
 import AdminTemplate from '@/layouts/Admin'
 import Home from '@/pages/admin/home/home'
 import Users from '@/pages/admin/users/users'
+import Profiles from '@/pages/admin/profiles/profiles'
 
 const routes = [
     {
@@ -11,6 +12,11 @@ const routes = [
                 path: '/users',
                 component: Users,
                 name: 'admin.users'
+            },
+            {
+                path: '/profiles',
+                component: Profiles,
+                name: 'admin.profiles'
             },
             {
                 path: '/',

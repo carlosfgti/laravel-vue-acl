@@ -31,7 +31,9 @@
             <v-icon>contacts</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
-            <v-list-tile-title>Perfis</v-list-tile-title>
+            <router-link :to="{name: 'admin.profiles'}" tag="v-list-tile-title">
+              Perfis
+            </router-link>
           </v-list-tile-content>
         </v-list-tile>
 
