@@ -20,7 +20,9 @@
             <v-icon>account_box</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
-            <v-list-tile-title>Usuários</v-list-tile-title>
+            <router-link :to="{name: 'admin.users'}" tag="v-list-tile-title">
+              Usuários
+            </router-link>
           </v-list-tile-content>
         </v-list-tile>
 
