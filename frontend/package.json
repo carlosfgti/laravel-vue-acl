@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "vue": "^2.6.6",
+    "vue-router": "^3.0.3",
     "vuetify": "^1.5.5"
   },
   "devDependencies": {
