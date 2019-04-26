@@ -34,21 +34,24 @@ class AuthServiceProvider extends ServiceProvider
 
     public function authorization()
     {
-        Gate::define('owner', function($user, $data){
-            return $user->id == $data->user_id;
-        });
+        if (!app()->runningInConsole()) {
 
-        $permissions = Permission::with('profiles')->get();
-        foreach ( $permissions as $permission ) {
-            Gate::define($permission->name, function($user) use ($permission) {
-                return $user->hasPermission($permission);
+            Gate::define('owner', function($user, $data){
+                return $user->id == $data->user_id;
+            });
+
+            $permissions = Permission::with('profiles')->get();
+            foreach ( $permissions as $permission ) {
+                Gate::define($permission->name, function($user) use ($permission) {
+                    return $user->hasPermission($permission);
+                });
+            }
+            
+            Gate::before(function($user, $ability){
+                if( $user->isSuperAdmin() ) {
+                    return true;
+                }
             });
         }
-        
-        Gate::before(function($user, $ability){
-            if( $user->isSuperAdmin() ) {
-                return true;
-            }
-        });
     }
 }
