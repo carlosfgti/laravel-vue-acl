@@ -23,9 +23,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        $categories = $this->repository->paginate();
+        $posts = $this->repository->paginate();
 
-        return PostResource::collection($categories);
+        return PostResource::collection($posts);
     }
 
     /**
@@ -53,7 +53,7 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        $post = $this->repository->findOrFail($id);
+        $post = auth()->user()->posts()->findOrFail($id);
 
         return new PostResource($post);
     }
@@ -84,7 +84,7 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        $this->repository->findOrFail($id)->delete();
+        auth()->user()->posts()->findOrFail($id)->delete();
 
         return response()->json(null, 204);
     }
