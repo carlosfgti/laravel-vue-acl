@@ -2,11 +2,20 @@
 
 namespace App\Http\Controllers\Api;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreUpdateProductRequest;
 use App\Http\Controllers\Controller;
+use App\Models\Post;
+use App\Http\Resources\PostResource;
 
 class PostController extends Controller
 {
+    private $repository;
+
+    public function __construct(Post $post)
+    {
+        $this->repository = $post;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,28 +23,26 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
-    }
+        $categories = $this->repository->paginate();
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return PostResource::collection($categories);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\StoreUpdateProductRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreUpdateProductRequest $request)
     {
-        //
+        $user = auth()->user();
+
+        $post = $user->posts()->create($request->all());
+
+        return (new PostResource($post))
+                ->response()
+                ->setStatusCode(201);
     }
 
     /**
@@ -46,30 +53,27 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
-    }
+        $post = $this->repository->findOrFail($id);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return new PostResource($post);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\StoreUpdateProductRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreUpdateProductRequest $request, $id)
     {
-        //
+        $user = auth()->user();
+
+        $post = $user->posts()->findOrFail($id);
+
+        $post->update($request->all());
+
+        return new PostResource($post);
     }
 
     /**
@@ -80,6 +84,8 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->repository->findOrFail($id)->delete();
+
+        return response()->json(null, 204);
     }
 }

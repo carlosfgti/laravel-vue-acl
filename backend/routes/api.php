@@ -5,6 +5,7 @@ Route::post('register', 'Api\Auth\LoginController@register');
 
 
 Route::group(['middleware' => 'auth:api'], function () {
+    Route::apiResource('/posts', 'Api\PostController');
     Route::apiResource('/categories', 'Api\CategoryController');
     Route::apiResource('/users', 'Api\UserController')->middleware('can:users');
     Route::apiResource('/profiles', 'Api\ProfileController');
