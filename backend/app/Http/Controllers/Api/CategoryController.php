@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Requests\StoreUpdateProfileRequest;
+use App\Http\Requests\StoreUpdateCategoryRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
@@ -32,10 +32,10 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreUpdateProfileRequest  $request
+     * @param  \App\Http\Requests\StoreUpdateCategoryRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreUpdateCategoryRequest $request)
     {
         $category = $this->repository->create($request->all());
 
@@ -60,11 +60,11 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\StoreUpdateProfileRequest  $request
+     * @param  \App\Http\Requests\StoreUpdateCategoryRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreUpdateCategoryRequest $request, $id)
     {
         $category = $this->repository->findOrFail($id);
 
