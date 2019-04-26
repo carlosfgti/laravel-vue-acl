@@ -66,4 +66,9 @@ class User extends Authenticatable
     {
         return $this->hasProfile('Admin');
     }
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
 }
