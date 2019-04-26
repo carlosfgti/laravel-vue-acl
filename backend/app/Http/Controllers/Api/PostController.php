@@ -23,7 +23,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = $this->repository->paginate();
+        $posts = $this->repository->with('user', 'category')->paginate();
 
         return PostResource::collection($posts);
     }
