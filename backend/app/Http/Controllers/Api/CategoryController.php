@@ -24,7 +24,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = $this->repository->paginate();
+        $categories = $this->repository->with('posts')->paginate();
 
         return CategoryResource::collection($categories);
     }

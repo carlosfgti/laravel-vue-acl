@@ -20,6 +20,7 @@ class UserResource extends JsonResource
             'email' => $this->email,
             'email_verified' => (boolean) $this->email_verified_at,
             'profiles' => ProfileResource::collection($this->whenLoaded('profiles')),
+            'posts' => PostResource::collection($this->whenLoaded('posts')),
         ];
     }
 }
