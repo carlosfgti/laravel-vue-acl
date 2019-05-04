@@ -13,6 +13,13 @@
             path: '/dashboard'
           }"
         />
+        <sidebar-item
+          :link="{
+            name: 'Usuários',
+            icon: 'ni ni-single-02 text-primary',
+            path: '/users'
+          }"
+        />
       </template>
     </side-bar>
     <div class="main-content" :data="sidebarBackground">

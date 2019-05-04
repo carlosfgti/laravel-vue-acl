@@ -17,6 +17,11 @@ export default new Router({
           name: 'dashboard',
           component: () => import('@/views/Dashboard.vue')
         },
+        {
+          path: '/users',
+          name: 'Usuários',
+          component: () => import('@/views/User.vue')
+        },
       ]
     },
     {
