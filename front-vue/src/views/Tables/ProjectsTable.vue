@@ -99,7 +99,7 @@
       },
       title: String,
       tableData: {
-        type: Array|Object,
+        type: Array,
         required: true,
         default: () => {
           return []
