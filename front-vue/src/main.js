@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
-import router from './router'
+import router from './routers'
 import './registerServiceWorker'
 import ArgonDashboard from './plugins/argon-dashboard'
 
