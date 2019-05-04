@@ -11,6 +11,17 @@
                     </stats-card>
                 </div>
             </div>
+            <div class="row">
+                <form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
+                    <div class="form-group mb-0">
+                        <base-input placeholder="Pesquisar"
+                                    class="input-group-alternative"
+                                    alternative=""
+                                    addon-right-icon="fas fa-search">
+                        </base-input>
+                    </div>
+                </form>
+            </div>
         </base-header>
 
         <div class="container-fluid mt--7">
