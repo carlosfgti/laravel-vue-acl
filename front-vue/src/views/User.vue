@@ -31,9 +31,9 @@
                     :active.sync="loading"
                     :can-cancel="false"
                     :is-full-page="false"></vue-loading>
-                    <projects-table
+                    <users-table
                         title="Listagem"
-                        :table-data="users.data"></projects-table>
+                        :table-data="users.data"></users-table>
                 </div>
             </div>
         </div>
@@ -41,7 +41,7 @@
     </div>
 </template>
 <script>
-  import ProjectsTable from './Tables/ProjectsTable'
+  import UsersTable from './Tables/UsersTable'
 
   export default {
     name: 'users',
@@ -69,7 +69,7 @@
       }
     },
     components: {
-      ProjectsTable
+      UsersTable
     },
     watch: {
       users (user) {
