@@ -25,7 +25,7 @@ class UserController extends Controller
     {
         $users = $this->repository
                         ->with(['profiles', 'profiles.permissions'])
-                        ->paginate();
+                        ->paginate(request()->input('perPage', 15));
 
         return UserResource::collection($users);
     }
