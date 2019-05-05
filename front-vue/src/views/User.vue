@@ -6,7 +6,7 @@
                 <div class="col-xl-3 col-lg-6">
                     <stats-card title="Total"
                                 type="gradient-red"
-                                sub-title="50"
+                                :sub-title="totalUsers"
                                 class="mb-4 mb-xl-0">
                     </stats-card>
                 </div>
@@ -33,7 +33,7 @@
                     :is-full-page="false"></vue-loading>
                     <projects-table
                         title="Listagem"
-                        :table-data="users"></projects-table>
+                        :table-data="users.data"></projects-table>
                 </div>
             </div>
         </div>
@@ -50,13 +50,14 @@
     },
     computed: {
       users () {
-        return this.$store.state.users.items.data
+        return this.$store.state.users.items
       }
     },
     data() {
       return {
         tableData: [],
         loading: false,
+        totalUsers: 0
       }
     },
     methods: {
@@ -69,7 +70,12 @@
     },
     components: {
       ProjectsTable
-    }
+    },
+    watch: {
+      users (user) {
+        this.totalUsers = user.meta.total
+      }
+    },
   };
 </script>
 <style></style>

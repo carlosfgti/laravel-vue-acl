@@ -40,8 +40,8 @@
         default: 'primary'
       },
       icon: String,
-      title: String,
-      subTitle: String,
+      title: [String, Number],
+      subTitle: [String, Number],
       iconClasses: [String, Array]
     }
   };
