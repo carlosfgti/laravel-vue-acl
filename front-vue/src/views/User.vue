@@ -27,6 +27,10 @@
         <div class="container-fluid mt--7">
             <div class="row">
                 <div class="col">
+                  <vue-loading
+                    :active.sync="loading"
+                    :can-cancel="false"
+                    :is-full-page="false"></vue-loading>
                     <projects-table
                         title="Listagem"
                         :table-data="users"></projects-table>
@@ -38,6 +42,7 @@
 </template>
 <script>
   import ProjectsTable from './Tables/ProjectsTable'
+
   export default {
     name: 'users',
     created() {
@@ -50,12 +55,16 @@
     },
     data() {
       return {
-        tableData: []
+        tableData: [],
+        loading: false,
       }
     },
     methods: {
       loadUsers () {
+        this.loading = true
+
         this.$store.dispatch('loadUsers')
+              .finally(() => this.loading = false)
       }
     },
     components: {
