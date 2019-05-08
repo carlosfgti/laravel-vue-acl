@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Http\Requests\StoreUpdateUserRequest;
 use App\Http\Resources\UserResource;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -21,10 +22,16 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $users = $this->repository
                         ->with(['profiles', 'profiles.permissions'])
+                        ->where(function ($query) use ($request) {
+                            if ($request->search != '') {
+                                $query->where('name', 'LIKE', "%{$request->search}%");
+                                $query->orWhere('email', $request->search);
+                            }
+                        })
                         ->paginate(request()->input('perPage', 15));
 
         return UserResource::collection($users);
