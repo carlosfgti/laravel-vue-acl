@@ -17,7 +17,9 @@
                         <base-input placeholder="Pesquisar"
                                     class="input-group-alternative"
                                     alternative=""
-                                    addon-right-icon="fas fa-search">
+                                    addon-right-icon="fas fa-search"
+                                    v-model="search"
+                                    v-on:blur="filter">
                         </base-input>
                     </div>
                 </form>
@@ -56,17 +58,25 @@
     },
     data() {
       return {
-        tableData: [],
         loading: false,
-        totalUsers: 0
+        totalUsers: 0,
+        page: 1,
+        search: ''
       }
     },
+
     methods: {
       loadUsers (page = 1) {
         this.loading = true
 
-        this.$store.dispatch('loadUsers', page)
-              .finally(() => this.loading = false)
+        this.$store.dispatch(
+          'loadUsers',
+          { page, search: this.search }
+        )
+        .finally(() => this.loading = false)
+      },
+      filter () {
+        this.loadUsers(1)
       }
     },
     components: {
@@ -75,7 +85,7 @@
     watch: {
       users (user) {
         this.totalUsers = user.meta.total || 0
-      }
+      },
     },
   };
 </script>
