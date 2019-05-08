@@ -44,7 +44,7 @@
     </div>
 </template>
 <script>
-  import UsersTable from './Tables/UsersTable'
+  import UsersTable from './_partials/UsersTable.vue'
 
   export default {
     name: 'users',
