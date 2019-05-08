@@ -59,7 +59,7 @@
     data() {
       return {
         loading: false,
-        totalUsers: 0,
+        totalUsers: "0",
         page: 1,
         search: ''
       }
