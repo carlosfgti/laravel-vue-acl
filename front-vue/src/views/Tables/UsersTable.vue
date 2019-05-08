@@ -17,7 +17,7 @@
                   :class="type === 'dark' ? 'table-dark': ''"
                   :thead-classes="type === 'dark' ? 'thead-dark': 'thead-light'"
                   tbody-classes="list"
-                  :data="tableData">
+                  :data="users.data">
         <template slot="columns">
           <th>#id</th>
           <th>Name</th>
@@ -50,7 +50,12 @@
 
     <div class="card-footer d-flex justify-content-end"
          :class="type === 'dark' ? 'bg-transparent': ''">
-      <base-pagination :total="30"></base-pagination>
+      <base-pagination
+        :total="meta.total"
+        :per-page="meta.per_page"
+        :value="meta.current_page"
+        v-model="pagination.default">
+      </base-pagination>
     </div>
 
   </div>
@@ -63,15 +68,44 @@
         type: String
       },
       title: String,
-      tableData: {
-        type: Array,
+      users: {
+        type: Object,
         required: true,
         default: () => {
-          return []
+          return Object.create({
+            data: [],
+            links: {},
+            meta: {
+              total: 0,
+              per_page: 15,
+              current_page: 1
+            }
+          })
         }
+      }
+    },
+    data () {
+      return {
+        pagination: {
+          default: 1
+        }
+      }
+    },
+    computed: {
+      meta () {
+        return this.users.meta
+      }
+    },
+    watch: {
+      pagination: {
+        handler (pagination) {
+          this.$emit('changePage', pagination.default)
+        },
+        deep: true
       }
     },
   }
 </script>
+
 <style>
 </style>

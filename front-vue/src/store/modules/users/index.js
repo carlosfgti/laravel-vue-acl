@@ -9,8 +9,10 @@ export default {
 
     actions: {
 
-        loadUsers (context) {
-            return axios.get('http://tests-laravel-acl.local/api/users')
+        loadUsers (context, page) {
+            const params = { page }
+
+            return axios.get('http://tests-laravel-acl.local/api/users', { params })
                         .then(response => context.commit('LOAD_USERS', response.data))
         }
 

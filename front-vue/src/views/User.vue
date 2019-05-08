@@ -33,7 +33,8 @@
                     :is-full-page="false"></vue-loading>
                     <users-table
                         title="Listagem"
-                        :table-data="users.data"></users-table>
+                        :users="users"
+                        @changePage="loadUsers"></users-table>
                 </div>
             </div>
         </div>
@@ -61,10 +62,10 @@
       }
     },
     methods: {
-      loadUsers () {
+      loadUsers (page = 1) {
         this.loading = true
 
-        this.$store.dispatch('loadUsers')
+        this.$store.dispatch('loadUsers', page)
               .finally(() => this.loading = false)
       }
     },
@@ -73,7 +74,7 @@
     },
     watch: {
       users (user) {
-        this.totalUsers = user.meta.total
+        this.totalUsers = user.meta.total || 0
       }
     },
   };
