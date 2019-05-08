@@ -3,7 +3,12 @@ import axios from 'axios'
 export default {
     state: {
         items: {
-            data: []
+            data: [],
+            meta: {
+                total: 0,
+                per_page: 15,
+                current_page: 1
+            }
         }
     },
 

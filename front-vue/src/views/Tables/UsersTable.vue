@@ -62,7 +62,7 @@
 </template>
 <script>
   export default {
-    name: 'projects-table',
+    name: 'users-table',
     props: {
       type: {
         type: String
@@ -71,17 +71,6 @@
       users: {
         type: Object,
         required: true,
-        default: () => {
-          return Object.create({
-            data: [],
-            links: {},
-            meta: {
-              total: 0,
-              per_page: 15,
-              current_page: 1
-            }
-          })
-        }
       }
     },
     data () {
