@@ -1,5 +1,7 @@
 import axios from 'axios'
 
+const resource = 'http://tests-laravel-acl.local/api/users'
+
 export default {
     state: {
         items: {
@@ -15,12 +17,13 @@ export default {
     actions: {
 
         loadUsers (context, params) {
-            return axios
-                        .get(
-                            'http://tests-laravel-acl.local/api/users',
-                            { params }
-                        )
+            return axios.get(resource, { params })
                         .then(response => context.commit('LOAD_USERS', response.data))
+        },
+
+        storeUser (context, data) {            
+            return axios.post(resource, data)
+                    // .then(response => context.commit('ADD_NEW_USER', response.data))
         }
 
     },
@@ -29,6 +32,10 @@ export default {
 
         LOAD_USERS (state, users) {
             state.items = users
+        },
+
+        ADD_NEW_USER (state, user) {
+            state.items.data.push(user)
         }
 
     },
